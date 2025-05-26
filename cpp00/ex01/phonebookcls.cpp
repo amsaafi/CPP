@@ -67,49 +67,40 @@ void phonebook::search() const
     }
 
     std::string input;
-    std::cout << "Enter index to display: ";
-    std::getline(std::cin, input);
-    
-    while (input.empty())
-    {
-        std::cout << "Index cannot be empty! Enter index to display: ";
-        std::getline(std::cin, input);
-    }
-    
     int index = 0;
-    size_t j = 0;
-    bool isValid = true;
+    bool validInput = false;
     
-    while (j < input.length())
+    while (!validInput)
     {
-        if (!std::isdigit(input[j]))
-        {
-            isValid = false;
-            break;
-        }
-        index = index * 10 + (input[j] - '0');
-        j++;
-    }
-    
-    while (!isValid)
-    {
-        std::cout << "Invalid index! Please enter a numeric index: ";
+        std::cout << "Enter index to display: ";
         std::getline(std::cin, input);
         
-        j = 0;
-        index = 0;
-        isValid = true;
+        if (input.empty())
+        {
+            std::cout << "Index cannot be empty!" << std::endl;
+            continue;
+        }
         
-        while (j < input.length())
+        bool allDigits = true;
+        index = 0;
+        
+        for (size_t j = 0; j < input.length(); j++)
         {
             if (!std::isdigit(input[j]))
             {
-                isValid = false;
+                allDigits = false;
                 break;
             }
             index = index * 10 + (input[j] - '0');
-            j++;
         }
+        
+        if (!allDigits)
+        {
+            std::cout << "Invalid index! Please enter a numeric index." << std::endl;
+            continue;
+        }
+        
+        validInput = true;
     }
     
     printContact(index);

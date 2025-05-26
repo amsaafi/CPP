@@ -1,4 +1,5 @@
 #include "contactcls.hpp"
+#include <cstdlib>
 
 contact::contact()
 {return;}
@@ -6,28 +7,39 @@ contact::~contact()
 {return;}
 
 
-void    fill_line(std::string out, std::string *in)
+bool fill_line(std::string out, std::string *in)
 {
     std::string tmp;
 
-    std::cout << out;
-    while (std::getline(std::cin, tmp) && !tmp[0])
+    while (true)
     {
-        std::cout << "No empty filds!" << std::endl << out;
+        std::cout << out;
+        
+        if (!std::getline(std::cin, tmp))
+            return false;
+        if (!tmp.empty() && tmp[0] != '\0')
+        {
+            *in = tmp;
+            return true;    
+        }
+        
+        std::cout << "No empty fields!" << std::endl;
     }
-    *in = tmp;
 }
 
-void    contact::init(int i)
+void contact::init(int i)
 {
-    std::string tmp;
-
     this->_index = i;
-    fill_line("Firstname: ", &this->_firstname);
-    fill_line("Lastname: ", &this->_lastname);
-    fill_line("Nickname: ", &this->_nickname);
-    fill_line("Number: ", &this->_phonenumber);
-    fill_line("Darkest secret: ", &this->_darksecret);
+    
+    if (!fill_line("Firstname: ", &this->_firstname) ||
+        !fill_line("Lastname: ", &this->_lastname) ||
+        !fill_line("Nickname: ", &this->_nickname) ||
+        !fill_line("Number: ", &this->_phonenumber) ||
+        !fill_line("Darkest secret: ", &this->_darksecret))
+    {
+        std::cout << std::endl << "EOF detected during contact creation." << std::endl;
+        exit(1);  // Or handle gracefully
+    }
 }
 
 int         contact::getindex() const {
