@@ -10,7 +10,7 @@ Fixed::~Fixed(void){
 }
 
 Fixed::Fixed(int const n) : _nb(n << this->_fb) {
-    std::cout << "Inte constructor called" << std::endl;
+    std::cout << "Int constructor called" << std::endl;
 }
 
 Fixed::Fixed(float const f) {
