@@ -6,13 +6,13 @@
 class Fixed
 {
     private:
-        int _nbr;
-        static const int _fb;
+        int _nb;
+        static const int _fb = 8;
     public:
     Fixed();
     ~Fixed();
-    Fixed(const Fixed &);
-    Fixed & operator = (const Fixed &);
+    Fixed(Fixed const &src);
+    Fixed& operator=(Fixed const &rhs);
 
     int getRawBits( void ) const;
     void setRawBits( int const raw );
